@@ -1,0 +1,89 @@
+/* public/css/admin.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --primary-color: #0f172a;
+    /* Slate 900 */
+    --accent-color: #3b82f6;
+    /* Blue 500 */
+    --bg-color: #f1f5f9;
+    /* Slate 100 */
+    --text-muted: #64748b;
+    --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+/* Modern Card */
+.card-modern {
+    border: none;
+    border-radius: 12px;
+    background: white;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease;
+}
+
+/* Form Inputs */
+.form-control {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    font-size: 0.9rem;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    border-color: var(--accent-color);
+}
+
+/* Buttons */
+.btn-primary-modern {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    border: none;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.btn-primary-modern:hover {
+    background-color: #1e293b;
+    transform: translateY(-1px);
+}
+
+/* Sidebar (for Dashboard) */
+.sidebar {
+    height: 100vh;
+    background: white;
+    border-right: 1px solid #e2e8f0;
+    position: fixed;
+    width: 260px;
+    padding-top: 2rem;
+}
+
+.sidebar .nav-link {
+    color: #64748b;
+    padding: 12px 24px;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+}
+
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover {
+    color: var(--primary-color);
+    background: #f8fafc;
+    border-left-color: var(--primary-color);
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 2rem;
+}
