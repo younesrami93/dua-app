@@ -14,20 +14,34 @@ class PostController extends Controller
         // Validation: Allow filtering by category
         $request->validate([
             'category_id' => 'nullable|exists:categories,id',
+            'app_user_id' => 'nullable|exists:app_users,id',
         ]);
 
         // Start the query
-        $query = Post::with(['author:id,username,avatar_url', 'category:id,name,icon_url'])
-            ->where('status', 'published'); // Only show safe posts
+        $userId = $request->user()->id;
 
-        // Filter by Category if provided
+
+        $query = Post::with(['author:id,username,avatar_url', 'category:id,name,icon_url'])
+            ->where('status', 'published')
+            ->withExists([
+                'interactions as is_liked' => function ($q) use ($userId) {
+                    $q->where('app_user_id', $userId)
+                        ->where('type', 'like');
+                }
+            ]);
+
+
+        if ($request->has('app_user_id')) {
+            $query->where('app_user_id', $request->app_user_id);
+        }
+
+
         if ($request->has('category_id')) {
             $query->where('category_id', $request->category_id);
         }
 
         // Order by newest
-        $posts = $query->latest()
-            ->cursorPaginate(15); // Efficient pagination for infinite scroll
+        $posts = $query->latest()->cursorPaginate(15);
 
         return response()->json($posts);
     }

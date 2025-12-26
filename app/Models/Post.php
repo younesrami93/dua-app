@@ -39,4 +39,15 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    // ✅ NEW: Required for "Like" check
+    public function interactions()
+    {
+        return $this->hasMany(Interaction::class);
+    }
+
+    // ✅ NEW: Useful for fetching/deleting comments
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\InteractionController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ReportController;
+use App\Models\AppUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
@@ -35,5 +36,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // report routes
     Route::post('/report', [ReportController::class, 'store']);
 
+    Route::get('/categories', function () {
+        return response()->json(\App\Models\Category::all());
+    });
 
+    Route::get('/users/{id}', function ($id) {
+        return AppUser::findOrFail($id);
+    });
 });

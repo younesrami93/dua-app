@@ -15,7 +15,7 @@ class CommentController extends Controller
     {
         // Fetch comments that are NOT replies (top-level)
         // We eager load 'author' and 'replies.author' (2 levels deep)
-        $comments = Comment::with(['author:id,username,avatar_url', 'replies.author:id,username,avatar_url'])
+        $comments = Comment::with(['author:id,username,avatar_url'])
             ->where('post_id', $postId)
             ->whereNull('parent_id') // Only get main comments
             ->where('status', 'visible')
