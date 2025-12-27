@@ -18,8 +18,7 @@ class PostController extends Controller
         ]);
 
         // Start the query
-        $userId = $request->user()->id;
-
+        $userId = $request->user()->id; // Logged-in user
 
         $query = Post::with(['author:id,username,avatar_url', 'category:id,name,icon_url'])
             ->where('status', 'published')
@@ -30,12 +29,17 @@ class PostController extends Controller
                 }
             ]);
 
-
+        // Filter by User Profile
         if ($request->has('app_user_id')) {
             $query->where('app_user_id', $request->app_user_id);
+
+            // ✅ NEW LOGIC: If viewing someone else's profile, hide anonymous posts
+            if ($request->app_user_id != $userId) { 
+                $query->where('is_anonymous', false);
+            }
         }
 
-
+        // Filter by Category
         if ($request->has('category_id')) {
             $query->where('category_id', $request->category_id);
         }

@@ -8,13 +8,27 @@ use App\Models\AppUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
-// Public Routes
-Route::post('/auth/guest', [AuthController::class, 'guestLogin']);
-Route::post('/auth/social', [AuthController::class, 'socialLogin']);
+
+
+Route::middleware(['throttle:6,1', 'app.secret'])->group(function () {
+
+    // Public Routes
+    Route::post('/auth/guest', [AuthController::class, 'guestLogin']);
+    Route::post('/auth/social', [AuthController::class, 'socialLogin']);
+    Route::post('/auth/register', [AuthController::class, 'register']);
+    Route::post('/auth/login', [AuthController::class, 'login']);
+
+    //Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
+    //Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
+});
+
 
 // Protected Routes (Require Token)
 Route::middleware('auth:sanctum')->group(function () {
 
+
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    
     // Test if token works
     Route::get('/user', function () {
         return auth()->user();
