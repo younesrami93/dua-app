@@ -24,7 +24,7 @@ Route::middleware(['throttle:6,1', 'app.secret'])->group(function () {
 
 
 // Protected Routes (Require Token)
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'user.status'])->group(function () {
 
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);

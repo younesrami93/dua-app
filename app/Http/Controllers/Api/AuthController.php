@@ -76,6 +76,12 @@ class AuthController extends Controller
             ]);
         }
 
+
+
+        if ($user->status === 'banned') {
+            return response()->json(['message' => 'Your account is banned. Contact support.'], 403);
+        }
+
         // Issue Token
         $token = $user->createToken($request->device_name)->plainTextToken;
 
